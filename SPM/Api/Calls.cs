@@ -13,9 +13,9 @@ namespace SPM.Api
 {
     public class Calls
     {
-        private string _apiAddress = @"http://api.spiget.org/v2";
+        private const string ApiBase = @"http://api.spiget.org/v2";
 
-        public IEnumerable<ResourceDetailsResponse> GetSearchedResources(string resourceName)
+        public IEnumerable<ResourceDetailsResponse> GetResourcesByName(string resourceName)
         {
             //https://api.spiget.org/v2/search/resources/<searched text>
             var apiResponse = GetApiResponse($"search/resources/{resourceName}");
@@ -35,14 +35,24 @@ namespace SPM.Api
         }
           
         //private methods
-        private string GetApiResponse(string action)
+        private static string GetApiResponse(string action)
         {
-            var webRequest = WebRequest.Create($"{_apiAddress}/{action}");
-            if (((HttpWebResponse) webRequest.GetResponse()).StatusCode == HttpStatusCode.NotFound)
+            var webRequest = WebRequest.Create($"{ApiBase}/{action}");
+            WebResponse webResponse = null;
+            
+            try
             {
-                return "404";
+                webResponse = webRequest.GetResponse();
             }
-            var stream = webRequest.GetResponse().GetResponseStream();
+            catch (WebException exception)
+            {
+                if (exception.Status == WebExceptionStatus.ProtocolError)
+                {
+                    return "404";
+                }
+            }
+            
+            var stream = webResponse.GetResponseStream();
             var reader = new StreamReader(stream);
             return reader.ReadToEnd();
         }
