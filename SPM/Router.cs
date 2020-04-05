@@ -25,6 +25,10 @@ namespace SPM
                 case "list":
                     Utils.ListInstalledPlugins();
                     break;
+                
+                case "getserver":
+                    Utils.DownloadServer();
+                    break;
             }
         }
 

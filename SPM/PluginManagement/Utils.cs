@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using SPM.Api;
 
 namespace SPM.PluginManagement
@@ -25,6 +26,15 @@ namespace SPM.PluginManagement
             {
                 Console.WriteLine($"{pluginRecord.name} ({pluginRecord.id}) version: {pluginRecord.version}");
             }
+        }
+
+        /// <summary>
+        /// Non-production functionality.
+        /// Downloads PaperMC server for development testing
+        /// </summary>
+        public static void DownloadServer()
+        {
+            (new WebClient()).DownloadFile(@"https://papermc.io/api/v1/paper/1.15.2/latest/download","TestServer.jar");
         }
     }
 }
