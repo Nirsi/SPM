@@ -11,7 +11,7 @@ using SPM.Api.Responses.Auxiliary;
 
 namespace SPM.Api
 {
-    public class Calls
+    public static class Calls
     {
         private const string ApiBase = @"http://api.spiget.org/v2";
 
@@ -25,7 +25,7 @@ namespace SPM.Api
             return jsonResponse;
         }
 
-        public static ResourceDetailsResponse GetResourceDetails(int resourceId)
+        public static ResourceDetailsResponse GetResourceDetails(long resourceId)
         {
             var apiResponse = GetApiResponse($"resources/{resourceId}");
             if (apiResponse == "404") return null;
@@ -34,12 +34,10 @@ namespace SPM.Api
             return jsonResponse;
         }
 
-        public static MemoryStream GetResourceJar(int resourceId)
+        public static MemoryStream GetResourceJar(long resourceId)
         {
-            using (var webClient = new WebClient())
-            {
-                return new MemoryStream(webClient.DownloadData($"https://api.spiget.org/v2/resources/{resourceId}/download"));
-            }
+            using var webClient = new WebClient();
+            return new MemoryStream(webClient.DownloadData($"https://api.spiget.org/v2/resources/{resourceId}/download"));
         }
         
           
