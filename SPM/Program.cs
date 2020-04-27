@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using SPM.Api;
+using SPM.PluginManagement;
 
 namespace SPM
 {
@@ -6,7 +9,10 @@ namespace SPM
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            PluginIO.PrepareDirectories();
+            
+            Router.ProcessInput(args);
+            Console.ReadLine();
         }
     }
 }
