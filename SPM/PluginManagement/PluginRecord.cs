@@ -3,8 +3,8 @@
     public class PluginRecord
     {
         public string name { get; set; }
-        public int id { get; set; }
-        public string version { get; set; }
+        public long id { get; set; }
+        public long version { get; set; }
         
     }
 }

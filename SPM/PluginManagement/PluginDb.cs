@@ -21,10 +21,10 @@ namespace SPM.PluginManagement
             File.AppendAllText($"{PluginIO.SpmBase}/plugins.json",JsonSerializer.Serialize(pluginRecords, serializerOptions));
         }
 
-        public static void RemoveFromJson(PluginRecord removedPluginRecord)
+        public static void RemoveFromJson(int resourceId)
         {
             var pluginRecords = JsonSerializer.Deserialize<PluginRecord[]>(File.ReadAllText($"{PluginIO.SpmBase}/plugins.json"));
-            WriteToJson(pluginRecords.Where(t => t.id != removedPluginRecord.id).ToArray());
+            WriteToJson(pluginRecords.Where(t => t.id != resourceId).ToArray());
         }
 
         public static PluginRecord[] ReadFromJson()
