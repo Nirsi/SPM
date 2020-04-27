@@ -15,7 +15,7 @@ namespace SPM.Api
     {
         private const string ApiBase = @"http://api.spiget.org/v2";
 
-        public IEnumerable<ResourceDetailsResponse> GetResourcesByName(string resourceName)
+        public static IEnumerable<ResourceDetailsResponse> GetResourcesByName(string resourceName)
         {
             //https://api.spiget.org/v2/search/resources/<searched text>
             var apiResponse = GetApiResponse($"search/resources/{resourceName}");
@@ -25,7 +25,7 @@ namespace SPM.Api
             return jsonResponse;
         }
 
-        public ResourceDetailsResponse GetResourceDetails(int resourceId)
+        public static ResourceDetailsResponse GetResourceDetails(int resourceId)
         {
             var apiResponse = GetApiResponse($"resources/{resourceId}");
             if (apiResponse == "404") return null;
@@ -33,6 +33,15 @@ namespace SPM.Api
 
             return jsonResponse;
         }
+
+        public static MemoryStream GetResourceJar(int resourceId)
+        {
+            using (var webClient = new WebClient())
+            {
+                return new MemoryStream(webClient.DownloadData($"https://api.spiget.org/v2/resources/{resourceId}/download"));
+            }
+        }
+        
           
         //private methods
         private static string GetApiResponse(string action)

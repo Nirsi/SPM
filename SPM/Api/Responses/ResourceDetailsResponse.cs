@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using SPM.Api.Responses.Auxiliary;
+using Version = SPM.Api.Responses.Auxiliary.Version;
 
 namespace SPM.Api.Responses
 {
@@ -10,6 +12,7 @@ namespace SPM.Api.Responses
         public long id { get; set; }
         public string name { get; set; }
         public string tag { get; set; }
+        public Version version { get; set; }
         public string contributors { get; set; }
         public long likes { get; set; }
         public File file { get; set; }
@@ -25,5 +28,8 @@ namespace SPM.Api.Responses
         public long price { get; set; }
         public string currency { get; set; }
         public List<Review> reviews { get; set; }
+        
+        [JsonPropertyName("versions")]
+        public List<Version> versions { get; set; }
     }
 }
