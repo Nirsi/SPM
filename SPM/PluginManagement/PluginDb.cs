@@ -13,37 +13,23 @@ namespace SPM.PluginManagement
     /// </summary>
     public class PluginDb
     {
-        private const string SpmBase = "./spm";
-        private const string PluginBase = "/store";
-
-        public static void PrepareDirectories()
-        {
-            if (!Directory.Exists(SpmBase))
-            {
-                Directory.CreateDirectory(SpmBase);
-            }
-
-            if (!Directory.Exists($"{SpmBase}/{PluginBase}"))
-            {
-                Directory.CreateDirectory($"{SpmBase}/{PluginBase}");
-            }
-            
-        }
+        
+        
         public static void WriteToJson(PluginRecord[] pluginRecords)
         {
             var serializerOptions = new JsonSerializerOptions {WriteIndented = true};
-            File.WriteAllText($"{SpmBase}/plugins.json",JsonSerializer.Serialize(pluginRecords, serializerOptions));
+            File.AppendAllText($"{PluginIO.SpmBase}/plugins.json",JsonSerializer.Serialize(pluginRecords, serializerOptions));
         }
 
         public static void RemoveFromJson(PluginRecord removedPluginRecord)
         {
-            var pluginRecords = JsonSerializer.Deserialize<PluginRecord[]>(File.ReadAllText($"{SpmBase}/plugins.json"));
+            var pluginRecords = JsonSerializer.Deserialize<PluginRecord[]>(File.ReadAllText($"{PluginIO.SpmBase}/plugins.json"));
             WriteToJson(pluginRecords.Where(t => t.id != removedPluginRecord.id).ToArray());
         }
 
         public static PluginRecord[] ReadFromJson()
         {
-            var pluginRecords = JsonSerializer.Deserialize<PluginRecord[]>(File.ReadAllText($"{SpmBase}/plugins.json"));
+            var pluginRecords = JsonSerializer.Deserialize<PluginRecord[]>(File.ReadAllText($"{PluginIO.SpmBase}/plugins.json"));
             return pluginRecords;
         }
     }
