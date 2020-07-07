@@ -40,12 +40,11 @@ namespace SPM
                 {
                     Handler = CommandHandler.Create(Utils.DownloadServer)
                 }
-                
             };
             
             rootCommand.Description = "Spigot plugin manager";
             
-            CommandHandler.Create<string, int, int, string, string>((search, install, remove, list, getserver) => 
+            rootCommand.Handler = CommandHandler.Create<string, int, int, string, string>((search, install, remove, list, getserver) => 
                 {
                     if (search != "none")
                     {

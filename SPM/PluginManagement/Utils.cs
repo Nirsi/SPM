@@ -47,12 +47,16 @@ namespace SPM.PluginManagement
         public static void InstallPlugin(long resourceId)
         {
             var resourceDetails = Calls.GetResourceDetails(resourceId);
+            Console.WriteLine(resourceDetails.name);
+            Console.ReadLine();
             
-            //writing record from DB
-            PluginDb.WriteToJson(new []{new PluginRecord(){name = resourceDetails.name, id = resourceDetails.id, version = resourceDetails.version.id}, });
+            //writing record to DB
+            PluginDb.WriteToJson(new []
+            {
+                new PluginRecord(){name = resourceDetails.name, id = resourceDetails.id, version = resourceDetails.version.id},
+            });
             
             //downloading plugin
-            //TODO: download plugin and install it.
             PluginIO.DownloadPlugin(resourceDetails.id);
             
         } 
