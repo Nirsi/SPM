@@ -4,6 +4,7 @@ namespace SPM.Api.Responses.Auxiliary
 {
     public class Version
     {
-        public long id { get; set; }
+        [JsonPropertyName("id")]
+        public long Id { get; set; }
     }
 }

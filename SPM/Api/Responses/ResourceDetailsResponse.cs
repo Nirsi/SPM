@@ -8,15 +8,20 @@ namespace SPM.Api.Responses
 {
     public class ResourceDetailsResponse
     {
+        [JsonPropertyName("id")]
+        public long Id { get; set; }
         
-        public long id { get; set; }
-        public string name { get; set; }
+        [JsonPropertyName("name")] 
+        public string Name { get; set; }
         public string tag { get; set; }
-        public Version version { get; set; }
+        [JsonPropertyName("version")]
+        public Version Version { get; set; }
         public string contributors { get; set; }
         public long likes { get; set; }
         public File file { get; set; }
-        public List<string> testedVersions { get; set; }
+        
+        [JsonPropertyName("testedVersions")]
+        public List<string> TestedVersions { get; set; }
         public Links links { get; set; }
         public Rating rating { get; set; }
         public long releaseDate { get; set; }
