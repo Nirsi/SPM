@@ -13,8 +13,11 @@ namespace SPM.PluginManagement
         
         public static void WriteToJson(PluginRecord[] pluginRecords)
         {
+
+            var allPluginRecords = ReadFromJson().Concat(pluginRecords).ToArray();
+            
             var serializerOptions = new JsonSerializerOptions {WriteIndented = true};
-            File.AppendAllText($"{PluginIO.SpmBase}/plugins.json",JsonSerializer.Serialize(pluginRecords, serializerOptions));
+            File.WriteAllText($"{PluginIO.SpmBase}/plugins.json",JsonSerializer.Serialize(allPluginRecords, serializerOptions));
         }
 
         public static void RemoveFromJson(int resourceId)
