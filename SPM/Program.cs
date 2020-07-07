@@ -1,11 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.CommandLine;
-using System.CommandLine.Help;
+﻿using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.Diagnostics;
-using System.IO;
-using SPM.Api;
 using SPM.PluginManagement;
 
 namespace SPM
@@ -14,6 +8,8 @@ namespace SPM
     {
         static int Main(string[] args)
         {
+            PluginIO.PrepareDirectories();
+            
             var rootCommand = new RootCommand
             {
                 //options with parameters
@@ -63,10 +59,6 @@ namespace SPM
                 });
             
             return rootCommand.InvokeAsync(args).Result;
-            
-            //keeping it for a history lesson.
-            PluginIO.PrepareDirectories();
-            Router.ProcessInput(args);
         }
     }
 }
