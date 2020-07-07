@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using SPM.Api.Responses;
-using SPM.Api.Responses.Auxiliary;
 
 namespace SPM.Api
 {

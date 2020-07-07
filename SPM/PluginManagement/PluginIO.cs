@@ -2,7 +2,6 @@
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
-using SPM.Api;
 
 namespace SPM.PluginManagement
 {
