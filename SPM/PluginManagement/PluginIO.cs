@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace SPM.PluginManagement
 {
@@ -38,8 +39,9 @@ namespace SPM.PluginManagement
             
         }
 
-        public static void DownloadPlugin(long resourceId)
+        public static bool DownloadPlugin(long resourceId)
         {
+           
             //getting memory stream of downloaded jar file
             /*
              var resourceMemStream = Calls.GetResourceJar(resourceId);
@@ -60,8 +62,9 @@ namespace SPM.PluginManagement
             }
             catch (Exception webException)
             {
-                Console.WriteLine(webException.Message);
+                Console.WriteLine($"{webException.Message} \nPlease try installing plugin again");
                 Console.ReadLine();
+                return false;
             }
 
             Console.WriteLine(response.StatusCode);
@@ -80,7 +83,9 @@ namespace SPM.PluginManagement
             var cleanFileName = cleaner.Replace(originalFileName.Split('"')[1], "");
             
             WebClient webClient = new WebClient();
-            webClient.DownloadFile("https://api.spiget.org/v2/resources/1331/download", $"{PluginBase}/{cleanFileName.Split('#')[0]}.jar");
+            webClient.DownloadFile($"https://api.spiget.org/v2/resources/{resourceId}/download", $"{PluginBase}/{cleanFileName.Split('#')[0]}.jar");
+
+            return true;
         }
         
         /// <summary>

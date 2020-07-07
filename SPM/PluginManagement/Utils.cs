@@ -17,12 +17,12 @@ namespace SPM.PluginManagement
             var collection = Calls.GetResourcesByName(searchedName);
             foreach (var response in collection)
             {                
-                var testedVersions = string.Join(',', response.testedVersions);
+                var testedVersions = string.Join(',', response.TestedVersions);
                 testedVersions = testedVersions.Length == 0 ? "None tested by the author" : testedVersions;
               
-                Console.WriteLine($"{response.name} ({response.id})\n" + 
+                Console.WriteLine($"{response.Name} ({response.Id})\n" + 
                                   $"Supported Minecraft versions: {testedVersions}\n"+
-                                  $"Newest plugin version: {response.version.id}\n");
+                                  $"Newest plugin version: {response.Version.Id}\n");
             }
         }
         
@@ -46,17 +46,20 @@ namespace SPM.PluginManagement
         public static void InstallPlugin(long resourceId)
         {
             var resourceDetails = Calls.GetResourceDetails(resourceId);
-            Console.WriteLine(resourceDetails.name);
-            Console.ReadLine();
+            Console.WriteLine($"Installing plugin {resourceDetails.Name}");
+
+            //downloading plugin
+            if (!PluginIO.DownloadPlugin(resourceDetails.Id))
+            {
+              return;
+            }
             
             //writing record to DB
             PluginDb.WriteToJson(new []
             {
-                new PluginRecord(){name = resourceDetails.name, id = resourceDetails.id, version = resourceDetails.version.id},
+                new PluginRecord(){name = resourceDetails.Name, id = resourceDetails.Id, version = resourceDetails.Version.Id},
             });
-            
-            //downloading plugin
-            PluginIO.DownloadPlugin(resourceDetails.id);
+
             
         } 
 
@@ -65,6 +68,12 @@ namespace SPM.PluginManagement
             //removing record from DB
             PluginDb.RemoveFromJson(resourceId);
             //deleting plugin from /plugins folder
+            
+        }
+
+        //TODO: Check for versions of all installed plugin and update them.
+        public static void UpdatePlugins()
+        {
             
         }
 
